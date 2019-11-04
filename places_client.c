@@ -5,6 +5,8 @@
  */
 
 #include "places.h"
+#include <stdio.h>
+#include <string.h>
 
 
 void
@@ -32,7 +34,7 @@ places_prog_1(char *host, char *city_arg, char *state_arg)
 	if (result_1 == (places_ret *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
-	airport p = result_1->places_ret_u.airport;
+	airport_place p = result_1->places_ret_u.airport_place;
 	printf("\nServer Response: City is %s, State is %s\n", p->city, p->state);
 #ifndef	DEBUG
 	clnt_destroy (clnt);
