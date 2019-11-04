@@ -6,10 +6,10 @@
 
 #include "airports.h"
 
-places_ret *
+airports_ret *
 getairports_1_svc(coordinates *argp, struct svc_req *rqstp)
 {
-	static places_ret  result;
+	static airports_ret  result;
 
 	/*
 	 * insert server code here

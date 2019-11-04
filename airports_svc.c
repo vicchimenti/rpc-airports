@@ -33,7 +33,7 @@ airports_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
 
 	case GETAIRPORTS:
 		_xdr_argument = (xdrproc_t) xdr_coordinates;
-		_xdr_result = (xdrproc_t) xdr_places_ret;
+		_xdr_result = (xdrproc_t) xdr_airports_ret;
 		local = (char *(*)(char *, struct svc_req *)) getairports_1_svc;
 		break;
 

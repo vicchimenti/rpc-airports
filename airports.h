@@ -50,14 +50,14 @@ typedef struct airports_ret airports_ret;
 
 #if defined(__STDC__) || defined(__cplusplus)
 #define GETAIRPORTS 1
-extern  places_ret * getairports_1(coordinates *, CLIENT *);
-extern  places_ret * getairports_1_svc(coordinates *, struct svc_req *);
+extern  airports_ret * getairports_1(coordinates *, CLIENT *);
+extern  airports_ret * getairports_1_svc(coordinates *, struct svc_req *);
 extern int airports_prog_1_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
 #else /* K&R C */
 #define GETAIRPORTS 1
-extern  places_ret * getairports_1();
-extern  places_ret * getairports_1_svc();
+extern  airports_ret * getairports_1();
+extern  airports_ret * getairports_1_svc();
 extern int airports_prog_1_freeresult ();
 #endif /* K&R C */
 

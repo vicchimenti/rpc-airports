@@ -11,7 +11,7 @@ void
 airports_prog_1(char *host)
 {
 	CLIENT *clnt;
-	places_ret  *result_1;
+	airports_ret  *result_1;
 	coordinates  getairports_1_arg;
 
 #ifndef	DEBUG
@@ -23,7 +23,7 @@ airports_prog_1(char *host)
 #endif	/* DEBUG */
 
 	result_1 = getairports_1(&getairports_1_arg, clnt);
-	if (result_1 == (places_ret *) NULL) {
+	if (result_1 == (airports_ret *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
 #ifndef	DEBUG

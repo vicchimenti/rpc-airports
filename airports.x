@@ -30,6 +30,6 @@ union airports_ret switch (int err) {
 /*IDL program*/
 program AIRPORTS_PROG {
 	version AIRPORTS_VERS {
-		places_ret GETAIRPORTS(coordinates) = 1;
+		airports_ret GETAIRPORTS(coordinates) = 1;
 	} = 1;
 } = 0x20000026;
