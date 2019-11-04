@@ -8,11 +8,17 @@
 
 
 void
-places_prog_1(char *host)
+places_prog_1(char *host, char *city_arg, char *state_arg)
 {
 	CLIENT *clnt;
 	places_ret  *result_1;
-	city_state  callplaces_1_arg;
+	struct city_state  callplaces_1_arg;
+	strncpy(callplaces_1_arg.city, city_arg, sizeof(callplaces_1_arg.city) - 1);
+	strncpy(callplaces_1_arg.state, state_arg, sizeof(callplaces_1_arg.state) - 1);
+
+	/*troubleshooting print*/
+	printf("city = %s, state= %s\n", callplaces_1_arg.city, callplaces_1_arg.state);
+
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, PLACES_PROG, PLACES_VERS, "udp");
@@ -26,6 +32,8 @@ places_prog_1(char *host)
 	if (result_1 == (places_ret *) NULL) {
 		clnt_perror (clnt, "call failed");
 	}
+	airport p = result_1->places_ret_u.airport;
+	printf("\nServer Response: City is %s, State is %s\n", p->city, p->state);
 #ifndef	DEBUG
 	clnt_destroy (clnt);
 #endif	 /* DEBUG */
@@ -36,12 +44,16 @@ int
 main (int argc, char *argv[])
 {
 	char *host;
+	char *city;
+	char *state;
 
-	if (argc < 2) {
+	if (argc < 4) {
 		printf ("usage: %s server_host\n", argv[0]);
 		exit (1);
-	}
+	} /* TODO: add user input validation*/
 	host = argv[1];
-	places_prog_1 (host);
+	city = argv[2];
+	state = argv[3];
+	places_prog_1 (host, city, state);
 exit (0);
 }
