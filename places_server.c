@@ -5,15 +5,67 @@
  */
 
 #include "places.h"
+#include "airports.h"
+#include <stdio.h>
+#include <string.h>
+
 
 places_ret *
-callplaces_1_svc(city_state *argp, struct svc_req *rqstp)
+callplaces_1_svc(struct city_state *argp, struct svc_req *rqstp)
 {
 	static places_ret  result;
 
-	/*
-	 * insert server code here
-	 */
+	/*View incomming values from the client*/
+	printf("Places Server Received city= %s, received state= %s\n", &argp[0].city, &argp[0].state);
+
+	static places_ret  result;
+	airport_places* ap = &result.places_ret_u.airport;
+
+	/***
+	*		Assign arg from client into a city_state struct
+	*		that can be forwarded to airports server
+	*
+	*/
+	struct city_state place;
+	strncpy(place.city, (char*)&argp[0].city, sizeof(place.city));
+	strncpy(place.state, (char*)&argp[0].state, sizeof(place.state));
+	printf("Places Server side\nAssigned city= %s, assigned state= %s\n", place.city, place.state);
+
+
+	/**** Add file functions to retreive lat and lon here  ****/
+
+	/****
+	*		Write airport client function here
+	*
+	*/
+	CLIENT *clnt;
+	airports_ret  *result_1;
+	coordinates  getairports_1_arg;
+
+#ifndef	DEBUG
+	clnt = clnt_create (host, AIRPORTS_PROG, AIRPORTS_VERS, "udp");
+	if (clnt == NULL) {
+		clnt_pcreateerror (host);
+		exit (1);
+	}
+#endif	/* DEBUG */
+
+	result_1 = getairports_1(&getairports_1_arg, clnt);
+	if (result_1 == (airports_ret *) NULL) {
+		clnt_perror (clnt, "call failed");
+	}
+	/* Assign result from airport server (this should be one hardcoded airport) */
+	airport p = result_1->airports_ret_u.airport;
+	strncpy(p->city, (char*)&result_1[0].city, sizeof(p->city));
+	strncpy(p->state, (char*)&result_1[0].state, sizeof(p->state));
+	printf("Places Client:\np->city = %s, p->state= %s\n", p->city, p->state);
+	
+	/***
+	*		return result to places client
+	*
+	*/
+	p->next = NULL;
+	*ap = p;
 
 	return &result;
 }
