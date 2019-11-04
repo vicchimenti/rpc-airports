@@ -5,15 +5,43 @@
  */
 
 #include "airports.h"
+#include <stdio.h>
+#include <string.h>
 
 airports_ret *
 getairports_1_svc(coordinates *argp, struct svc_req *rqstp)
 {
 	static airports_ret  result;
+	/*view incoming values from the client-places_server*/
+	printf("Airport Server Side:\nreceived lat= %s, received lon= %s\n", &argp[0].lat, &argp[0].lon);
 
-	/*
-	 * insert server code here
-	 */
+	/*assign arg from places server into coordinates struct*/
+	struct coordinates location = {.lat = argp[0].lat, .lon = argp[0].lon};
+	// strncpy(location.lat, (char*)&argp[0].lat, sizeof(location.lat));
+	// strncpy(location.lon, (char*)&argp[0].lon, sizeof(location.lon));
+	printf("Airport Server Side:\nassigned lat= %d, assigned lon= %d", location.lat, location.lon);
+
+	/***
+	*		Call to File operations goes here
+	*
+	*/
+
+	/*assign airport structures*/
+	airport* ap = &result.airports_ret_u.airport;
+	airport p;
+
+	/*hardcode airport struct for roundtrip test*/
+	char* c;
+	char* s;
+	strncpy(c, "Portland", 64);
+	strncpy(s, "OR", 64);
+	strncpy(p->city, (char*)&c, sizeof(p->city) - 1);
+	strncpy(p->state, (char*)&s, sizeof(p->state) - 1);
+	printf("Airport server side:\np->city= %s, p->state= %s\n", p->city, p->state);
+
+	/*return result to places server*/
+	p->next = NULL;
+	*ap = p;
 
 	return &result;
 }
