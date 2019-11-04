@@ -19,7 +19,7 @@ callplaces_1_svc(struct city_state *argp, struct svc_req *rqstp)
 	printf("Places Server Received city= %s, received state= %s\n", &argp[0].city, &argp[0].state);
 
 	static places_ret  result;
-	airport_places* ap = &result.places_ret_u.airport;
+	airport_places* apsp = &result.places_ret_u.airport;
 
 	/***
 	*		Assign arg from client into a city_state struct
@@ -55,17 +55,28 @@ callplaces_1_svc(struct city_state *argp, struct svc_req *rqstp)
 		clnt_perror (clnt, "call failed");
 	}
 	/* Assign result from airport server (this should be one hardcoded airport) */
-	airport p = result_1->airports_ret_u.airport;
-	strncpy(p->city, (char*)&result_1[0].city, sizeof(p->city));
-	strncpy(p->state, (char*)&result_1[0].state, sizeof(p->state));
-	printf("Places Client:\np->city = %s, p->state= %s\n", p->city, p->state);
+	airport ap = result_1->airports_ret_u.airport;
+	strncpy(ap->city, (char*)&result_1[0].city, sizeof(ap->city));
+	strncpy(ap->state, (char*)&result_1[0].state, sizeof(ap->state));
+	printf("Places Client:\np->city = %s, p->state= %s\n", ap->city, ap->state);
+
+	/* convert from airports struct to airport_place struct */
+	struct aiprort_place_node airport_terminal;
+	strncpy(airport_terminal->city, (char*)&ap->city, sizeof(airport_terminal->city) - 1);
+	strncpy(airport_terminal->state, (char*)&ap->stte, sizeof(airport_terminal->state) - 1);
+	airport_place p = airport_terminal;
+
 	
 	/***
 	*		return result to places client
 	*
 	*/
 	p->next = NULL;
-	*ap = p;
+	*apsp = p;
+
+// #ifndef	DEBUG
+// 	clnt_destroy (clnt);
+// #endif	 /* DEBUG */
 
 	return &result;
 }
