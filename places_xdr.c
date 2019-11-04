@@ -4,6 +4,7 @@
  */
 
 #include "places.h"
+#include "airports.h"
 
 bool_t
 xdr_airport_place (XDR *xdrs, airport_place *objp)
@@ -88,6 +89,97 @@ xdr_places_ret (XDR *xdrs, places_ret *objp)
 	switch (objp->err) {
 	case 0:
 		 if (!xdr_airport_place (xdrs, &objp->places_ret_u.airport_place))
+			 return FALSE;
+		break;
+	default:
+		break;
+	}
+	return TRUE;
+}
+
+bool_t
+xdr_airport (XDR *xdrs, airport *objp)
+{
+	register int32_t *buf;
+
+	 if (!xdr_pointer (xdrs, (char **)objp, sizeof (struct airportnode), (xdrproc_t) xdr_airportnode))
+		 return FALSE;
+	return TRUE;
+}
+
+bool_t
+xdr_airport_code (XDR *xdrs, airport_code objp)
+{
+	register int32_t *buf;
+
+	 if (!xdr_vector (xdrs, (char *)objp, 4,
+		sizeof (char), (xdrproc_t) xdr_char))
+		 return FALSE;
+	return TRUE;
+}
+
+bool_t
+xdr_city_name (XDR *xdrs, city_name objp)
+{
+	register int32_t *buf;
+
+	 if (!xdr_vector (xdrs, (char *)objp, 64,
+		sizeof (char), (xdrproc_t) xdr_char))
+		 return FALSE;
+	return TRUE;
+}
+
+bool_t
+xdr_state_initials (XDR *xdrs, state_initials objp)
+{
+	register int32_t *buf;
+
+	 if (!xdr_vector (xdrs, (char *)objp, 3,
+		sizeof (char), (xdrproc_t) xdr_char))
+		 return FALSE;
+	return TRUE;
+}
+
+bool_t
+xdr_airportnode (XDR *xdrs, airportnode *objp)
+{
+	register int32_t *buf;
+
+	 if (!xdr_airport_code (xdrs, objp->airport))
+		 return FALSE;
+	 if (!xdr_city_name (xdrs, objp->city))
+		 return FALSE;
+	 if (!xdr_state_initials (xdrs, objp->state))
+		 return FALSE;
+	 if (!xdr_double (xdrs, &objp->distance))
+		 return FALSE;
+	 if (!xdr_airport (xdrs, &objp->next))
+		 return FALSE;
+	return TRUE;
+}
+
+bool_t
+xdr_coordinates (XDR *xdrs, coordinates *objp)
+{
+	register int32_t *buf;
+
+	 if (!xdr_double (xdrs, &objp->lat))
+		 return FALSE;
+	 if (!xdr_double (xdrs, &objp->lon))
+		 return FALSE;
+	return TRUE;
+}
+
+bool_t
+xdr_airports_ret (XDR *xdrs, airports_ret *objp)
+{
+	register int32_t *buf;
+
+	 if (!xdr_int (xdrs, &objp->err))
+		 return FALSE;
+	switch (objp->err) {
+	case 0:
+		 if (!xdr_airport (xdrs, &objp->airports_ret_u.airport))
 			 return FALSE;
 		break;
 	default:

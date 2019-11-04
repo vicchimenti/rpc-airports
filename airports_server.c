@@ -17,8 +17,6 @@ getairports_1_svc(coordinates *argp, struct svc_req *rqstp)
 
 	/*assign arg from places server into coordinates struct*/
 	struct coordinates location = {.lat = argp[0].lat, .lon = argp[0].lon};
-	// strncpy(location.lat, (char*)&argp[0].lat, sizeof(location.lat));
-	// strncpy(location.lon, (char*)&argp[0].lon, sizeof(location.lon));
 	printf("Airport Server Side:\nassigned lat= %d, assigned lon= %d", location.lat, location.lon);
 
 	/***

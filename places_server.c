@@ -40,8 +40,10 @@ callplaces_1_svc(struct city_state *argp, struct svc_req *rqstp)
 	*/
 	CLIENT *clnt;
 	airports_ret  *result_1;
-	coordinates  getairports_1_arg;
+	struct coordinates  getairports_1_arg;
 	char* host = "localhost";
+	double latitude = 122.1;
+	double longitude = 54.40;
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, AIRPORTS_PROG, AIRPORTS_VERS, "udp");
@@ -50,6 +52,12 @@ callplaces_1_svc(struct city_state *argp, struct svc_req *rqstp)
 		exit (1);
 	}
 #endif	/* DEBUG */
+
+	/*assign arg from places server into coordinates struct (hardcoded)*/
+	getairports_1_arg.lat = latitude;
+	getairports_1_arg.lon = longitude;
+	printf("Places Server Side:\nassigned getairports_1_arg.lat= %d, assigned getairports_1_arg.lon= %d", getairports_1_arg.lat, getairports_1_arg.lon);
+
 
 	result_1 = getairports_1(&getairports_1_arg, clnt);
 	if (result_1 == (airports_ret *) NULL) {

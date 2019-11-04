@@ -3,6 +3,7 @@
  * It was generated using rpcgen.
  */
 
+#include "airports.h"
 #include "places.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,6 +16,24 @@
 #ifndef SIG_PF
 #define SIG_PF void(*)(int)
 #endif
+
+/* Default timeout can be changed using clnt_control() */
+static struct timeval TIMEOUT = { 25, 0 };
+
+airports_ret *
+getairports_1(coordinates *argp, CLIENT *clnt)
+{
+	static airports_ret clnt_res;
+
+	memset((char *)&clnt_res, 0, sizeof(clnt_res));
+	if (clnt_call (clnt, GETAIRPORTS,
+		(xdrproc_t) xdr_coordinates, (caddr_t) argp,
+		(xdrproc_t) xdr_airports_ret, (caddr_t) &clnt_res,
+		TIMEOUT) != RPC_SUCCESS) {
+		return (NULL);
+	}
+	return (&clnt_res);
+}
 
 static void
 places_prog_1(struct svc_req *rqstp, register SVCXPRT *transp)
