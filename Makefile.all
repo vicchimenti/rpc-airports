@@ -1,5 +1,5 @@
 # Makefile to call the two rpcgen makefile airports and places
-places:
-	make -f Makefile.places
 airports:
 	make -f Makefile.airports
+places:
+	make -f Makefile.places
