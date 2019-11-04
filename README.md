@@ -1,1 +1,2 @@
 # rpc-airports
+test only
