@@ -13,13 +13,13 @@
 places_ret *
 callplaces_1_svc(struct city_state *argp, struct svc_req *rqstp)
 {
-	static places_ret  result;
+	// static places_ret  result;
 
 	/*View incomming values from the client*/
 	printf("Places Server Received city= %s, received state= %s\n", &argp[0].city, &argp[0].state);
 
 	static places_ret  result;
-	airport_places* apsp = &result.places_ret_u.airport;
+	airport_place* apsp = &result.places_ret_u.airport_place;
 
 	/***
 	*		Assign arg from client into a city_state struct
@@ -41,6 +41,7 @@ callplaces_1_svc(struct city_state *argp, struct svc_req *rqstp)
 	CLIENT *clnt;
 	airports_ret  *result_1;
 	coordinates  getairports_1_arg;
+	char* host = "localhost";
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, AIRPORTS_PROG, AIRPORTS_VERS, "udp");
@@ -56,23 +57,24 @@ callplaces_1_svc(struct city_state *argp, struct svc_req *rqstp)
 	}
 	/* Assign result from airport server (this should be one hardcoded airport) */
 	airport ap = result_1->airports_ret_u.airport;
-	strncpy(ap->city, (char*)&result_1[0].city, sizeof(ap->city));
-	strncpy(ap->state, (char*)&result_1[0].state, sizeof(ap->state));
+	// strncpy(ap->city, (char*)&result_1[0]->city, sizeof(ap->city));
+	// strncpy(ap->state, (char*)&result_1[0]->state, sizeof(ap->state));
 	printf("Places Client:\np->city = %s, p->state= %s\n", ap->city, ap->state);
 
 	/* convert from airports struct to airport_place struct */
-	struct aiprort_place_node airport_terminal;
+	airport_place airport_terminal;
+	airport_terminal = (airport_place_node *)malloc(sizeof(airport_place_node));
 	strncpy(airport_terminal->city, (char*)&ap->city, sizeof(airport_terminal->city) - 1);
-	strncpy(airport_terminal->state, (char*)&ap->stte, sizeof(airport_terminal->state) - 1);
-	airport_place p = airport_terminal;
+	strncpy(airport_terminal->state, (char*)&ap->state, sizeof(airport_terminal->state) - 1);
+	// airport_place p = airport_terminal;
 
 	
 	/***
 	*		return result to places client
 	*
 	*/
-	p->next = NULL;
-	*apsp = p;
+	airport_terminal->next = NULL;
+	*apsp = airport_terminal;
 
 // #ifndef	DEBUG
 // 	clnt_destroy (clnt);
