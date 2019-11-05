@@ -13,13 +13,13 @@ getairports_1_svc(struct coordinates *argp, struct svc_req *rqstp)
 {
 	static airports_ret  result;
 	/*view incoming values from the client-places_server*/
-	printf("Airport Server Side:\nreceived lat= %d, received lon= %d\n", &argp[0].lat, &argp[0].lon);
+	printf("\nAirport Server Side: received lat= %d, received lon= %d\n", &argp[0].lat, &argp[0].lon);
 
 	/*assign arg from places server into coordinates struct*/
 	struct coordinates location;
 	location.lat = argp[0].lat;
 	location.lon = argp[0].lon;
-	printf("Airport Server side:\nassigned lat= %d, assigned lon= %d\n", location.lat, location.lon);
+	printf("\nAirport Server side: assigned lat= %d, assigned lon= %d\n", location.lat, location.lon);
 
 	/***
 	*		Call to File operations goes here
@@ -37,7 +37,7 @@ getairports_1_svc(struct coordinates *argp, struct svc_req *rqstp)
 	strncpy(s, "OR", 64);
 	strncpy(p->city, (char*)&c, sizeof(p->city) - 1);
 	strncpy(p->state, (char*)&s, sizeof(p->state) - 1);
-	printf("Airport server side:\np->city= %s, p->state= %s\n", p->city, p->state);
+	printf("\nAirport server side: p->city= %s, p->state= %s\n", p->city, p->state);
 
 	/*return result to places server*/
 	p->next = NULL;

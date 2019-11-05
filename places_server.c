@@ -16,7 +16,7 @@ callplaces_1_svc(struct city_state *argp, struct svc_req *rqstp)
 	// static places_ret  result;
 
 	/*View incomming values from the client*/
-	printf("Places Server Side:\nReceived city= %s, received state= %s\n", &argp[0].city, &argp[0].state);
+	printf("\nPlaces Server Side: Received city= %s, received state= %s\n", &argp[0].city, &argp[0].state);
 
 	static places_ret  result;
 	airport_place* apsp = &result.places_ret_u.airport_place;
@@ -29,7 +29,7 @@ callplaces_1_svc(struct city_state *argp, struct svc_req *rqstp)
 	struct city_state place;
 	strncpy(place.city, (char*)&argp[0].city, sizeof(place.city));
 	strncpy(place.state, (char*)&argp[0].state, sizeof(place.state));
-	printf("Places Server side:\nAssigned city= %s, assigned state= %s\n", place.city, place.state);
+	printf("\nPlaces Server side: Assigned city= %s, assigned state= %s\n", place.city, place.state);
 
 
 	/**** Add file functions to retreive lat and lon here  ****/
@@ -40,10 +40,10 @@ callplaces_1_svc(struct city_state *argp, struct svc_req *rqstp)
 	*/
 	CLIENT *clnt;
 	airports_ret  *result_1;
-	struct coordinates  getairports_1_arg;
+	struct coordinates getairports_1_arg;
 	char* host = "localhost";
-	double latitude = 122.1;
-	double longitude = 54.40;
+	double latitude = 122;
+	double longitude = 54;
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, AIRPORTS_PROG, AIRPORTS_VERS, "udp");
@@ -54,9 +54,9 @@ callplaces_1_svc(struct city_state *argp, struct svc_req *rqstp)
 #endif	/* DEBUG */
 
 	/*assign arg from places server into coordinates struct (hardcoded)*/
-	getairports_1_arg.lat = latitude;
-	getairports_1_arg.lon = longitude;
-	printf("places server side:\nassigned getairports_1_arg.lat= %d, assigned getairports_1_arg.lon= %d\n", getairports_1_arg.lat, getairports_1_arg.lon);
+	getairports_1_arg.lat = 122;
+	getairports_1_arg.lon = 54;
+	printf("\nplaces server side: assigned getairports_1_arg.lat= %d, assigned getairports_1_arg.lon= %d\n", getairports_1_arg.lat, getairports_1_arg.lon);
 
 
 	result_1 = getairports_1(&getairports_1_arg, clnt);
@@ -67,7 +67,7 @@ callplaces_1_svc(struct city_state *argp, struct svc_req *rqstp)
 	airport ap = result_1->airports_ret_u.airport;
 	// strncpy(ap->city, (char*)&result_1[0]->city, sizeof(ap->city));
 	// strncpy(ap->state, (char*)&result_1[0]->state, sizeof(ap->state));
-	printf("Places Client:\np->city = %s, p->state= %s\n", ap->city, ap->state);
+	printf("\nPlaces Client: p->city = %s, p->state= %s\n", ap->city, ap->state);
 
 	/* convert from airports struct to airport_place struct */
 	airport_place airport_terminal;
