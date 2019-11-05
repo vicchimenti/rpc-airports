@@ -27,8 +27,13 @@ getairports_1_svc(struct coordinates *argp, struct svc_req *rqstp)
 	*/
 
 	/*assign airport structures*/
+	printf("/*assign airport structures*/");
 	airport* ap = &result.airports_ret_u.airport;
+	printf("airport* ap = &result.airports_ret_u.airport;");
 	airport p;
+	printf("airport p;");
+	p = (airportnode *)malloc(sizeof(airportnode));
+	printf("p = (airportnode *)malloc(sizeof(airportnode));");
 
 	/*hardcode airport struct for roundtrip test*/
 	char* c;
