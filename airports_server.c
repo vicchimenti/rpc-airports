@@ -19,7 +19,7 @@ getairports_1_svc(struct coordinates *argp, struct svc_req *rqstp)
 	struct coordinates location;
 	location.lat = argp[0].lat;
 	location.lon = argp[0].lon;
-	printf("Airport Server Side:\nassigned lat= %d, assigned lon= %d\n", location.lat, location.lon);
+	printf("Airport Server side:\nassigned lat= %d, assigned lon= %d\n", location.lat, location.lon);
 
 	/***
 	*		Call to File operations goes here
