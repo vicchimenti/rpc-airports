@@ -32,7 +32,7 @@ places_prog_1(char *host, char *city_arg, char *state_arg)
 
 	result_1 = callplaces_1(&callplaces_1_arg, clnt);
 	if (result_1 == (places_ret *) NULL) {
-		clnt_perror (clnt, "call failed");
+		clnt_perror (clnt, "call failed in callplaces_1");
 	}
 	airport_place p = result_1->places_ret_u.airport_place;
 	printf("\nServer Response: City is %s, State is %s\n", p->city, p->state);

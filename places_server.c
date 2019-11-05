@@ -42,8 +42,8 @@ callplaces_1_svc(struct city_state *argp, struct svc_req *rqstp)
 	airports_ret  *result_1;
 	coordinates getairports_1_arg;
 	char* host = "localhost";
-	double latitude = 122;
-	double longitude = 54;
+	double latitude = 122.7;
+	double longitude = 54.40;
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, AIRPORTS_PROG, AIRPORTS_VERS, "udp");
@@ -61,7 +61,7 @@ callplaces_1_svc(struct city_state *argp, struct svc_req *rqstp)
 
 	result_1 = getairports_1(&getairports_1_arg, clnt);
 	if (result_1 == (airports_ret *) NULL) {
-		clnt_perror (clnt, "call failed");
+		clnt_perror (clnt, "call failed in getairports_1");
 	}
 	/* Assign result from airport server (this should be one hardcoded airport) */
 	airport ap = result_1->airports_ret_u.airport;
