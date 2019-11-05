@@ -9,15 +9,17 @@
 #include <string.h>
 
 airports_ret *
-getairports_1_svc(coordinates *argp, struct svc_req *rqstp)
+getairports_1_svc(struct coordinates *argp, struct svc_req *rqstp)
 {
 	static airports_ret  result;
 	/*view incoming values from the client-places_server*/
-	printf("Airport Server Side:\nreceived lat= %s, received lon= %s\n", &argp[0].lat, &argp[0].lon);
+	printf("Airport Server Side:\nreceived lat= %d, received lon= %d\n", &argp[0].lat, &argp[0].lon);
 
 	/*assign arg from places server into coordinates struct*/
-	struct coordinates location = {.lat = argp[0].lat, .lon = argp[0].lon};
-	printf("Airport Server Side:\nassigned lat= %d, assigned lon= %d", location.lat, location.lon);
+	struct coordinates location;
+	location.lat = argp[0].lat;
+	location.lon = argp[0].lon;
+	printf("Airport Server Side:\nassigned lat= %d, assigned lon= %d\n", location.lat, location.lon);
 
 	/***
 	*		Call to File operations goes here

@@ -16,7 +16,7 @@ callplaces_1_svc(struct city_state *argp, struct svc_req *rqstp)
 	// static places_ret  result;
 
 	/*View incomming values from the client*/
-	printf("Places Server Received city= %s, received state= %s\n", &argp[0].city, &argp[0].state);
+	printf("Places Server Received:\ncity= %s, received state= %s\n", &argp[0].city, &argp[0].state);
 
 	static places_ret  result;
 	airport_place* apsp = &result.places_ret_u.airport_place;
@@ -56,7 +56,7 @@ callplaces_1_svc(struct city_state *argp, struct svc_req *rqstp)
 	/*assign arg from places server into coordinates struct (hardcoded)*/
 	getairports_1_arg.lat = latitude;
 	getairports_1_arg.lon = longitude;
-	printf("Places Server Side:\nassigned getairports_1_arg.lat= %d, assigned getairports_1_arg.lon= %d", getairports_1_arg.lat, getairports_1_arg.lon);
+	printf("places Server Side:\nassigned getairports_1_arg.lat= %d, assigned getairports_1_arg.lon= %d\n", getairports_1_arg.lat, getairports_1_arg.lon);
 
 
 	result_1 = getairports_1(&getairports_1_arg, clnt);
