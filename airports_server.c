@@ -36,15 +36,15 @@ getairports_1_svc(struct coordinates *argp, struct svc_req *rqstp)
 	printf("\np = (airportnode *)malloc(sizeof(airportnode));\n");
 
 	/*hardcode airport struct for roundtrip test*/
-	char* c;
-	char* s;
-	strncpy(c, "Portland", 10);
-	printf("\nchar c: %s", c);
-	strncpy(s, "OR", 4);
-	printf("\nchar s: %s", s);
-	printf("\nHardcoded city = %s, state= %s\n", c, s);
-	strncpy(p->city, c, sizeof(p->city) - 1);
-	strncpy(p->state, s, sizeof(p->state) - 1);
+	// char* c;
+	// char* s;
+	// strncpy(c, "Portland", 10);
+	// printf("\nchar c: %s", c);
+	// strncpy(s, "OR", 4);
+	// printf("\nchar s: %s", s);
+	// printf("\nHardcoded city = %s, state= %s\n", c, s);
+	strncpy(p->city, "Portland", sizeof(p->city) - 1);
+	strncpy(p->state, "OR", sizeof(p->state) - 1);
 	printf("\nAirport server side: p->city= %s, p->state= %s\n", p->city, p->state);
 
 	/*return result to places server*/
