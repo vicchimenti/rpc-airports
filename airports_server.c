@@ -13,7 +13,7 @@ getairports_1_svc(struct coordinates *argp, struct svc_req *rqstp)
 {
 	static airports_ret  result;
 	/*view incoming values from the client-places_server*/
-	printf("\nAirport Server Side: received lat= %f, received lon= %f\n", &argp[0].lat, &argp[0].lon);
+	printf("\nAirport Server Side: received lat= %f, received lon= %f\n", argp[0].lat, argp[0].lon);
 
 	/*assign arg from places server into coordinates struct*/
 	struct coordinates location;
