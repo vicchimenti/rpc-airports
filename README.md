@@ -1,6 +1,6 @@
 # rpc-airports
 
-test only
+Discovered struct coordinates needs a pointer in dot x file, will move forward in new repo and retain this repo for now
 
 ## Roundtrip Error
 
